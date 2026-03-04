@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6001666694207037714}
   - component: {fileID: 3607586854841179301}
   - component: {fileID: 8162198745818207176}
+  - component: {fileID: 8973285133267598587}
   m_Layer: 0
   m_Name: Asteroid_Med_01
   m_TagString: Untagged
@@ -178,3 +179,19 @@ PolygonCollider2D:
       - {x: 0.079236865, y: -0.034281284}
       - {x: 0.097390056, y: 0.092007846}
   m_UseDelaunayMesh: 1
+--- !u!114 &8973285133267598587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866523721687625418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3444ac28adc6e47aa7c5f6746c1735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  collisionDamage: 1
+  healthMax: 2
+  healthCurrent: 0
+  explodeParticle: {fileID: 2057839621716469168, guid: c425ab39a36bbec4bb8c97312cc63f1d, type: 3}

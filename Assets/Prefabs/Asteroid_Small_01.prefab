@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5116663898061148888}
   - component: {fileID: 5747476714403085531}
   - component: {fileID: 2005184162263895855}
+  - component: {fileID: 2385894895596260666}
   m_Layer: 0
   m_Name: Asteroid_Small_01
   m_TagString: Untagged
@@ -176,3 +177,19 @@ PolygonCollider2D:
       - {x: 0.04100406, y: -0.05391559}
       - {x: 0.05451429, y: -0.04404646}
   m_UseDelaunayMesh: 1
+--- !u!114 &2385894895596260666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887850372725332582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3444ac28adc6e47aa7c5f6746c1735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  collisionDamage: 1
+  healthMax: 1
+  healthCurrent: 0
+  explodeParticle: {fileID: 2057839621716469168, guid: 72fd1418896c57646968060412f1be0c, type: 3}
