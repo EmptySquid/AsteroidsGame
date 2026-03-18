@@ -4,15 +4,19 @@ public class SoundManager : MonoBehaviour
 {
 
     public AudioClip[] collectionSounds;
+    public AudioClip[] explosionSounds;
+    public AudioClip[] bulletSounds;
+    public AudioClip[] deathSounds;
+    public AudioClip[] impactSounds;
     public AudioSource[] sfxAudioSources;
     
-    public void PlayRandomCollectSound()
+    public void PlayRandomSound(AudioClip[] _clips)
     {
         AudioSource availableAudioSource = GetFreeAudioSource(sfxAudioSources);
         float minPitch = 0.8f;
         float maxPitch = 1.2f;
-        int rnd = Random.Range(0, collectionSounds.Length);
-        availableAudioSource.clip = collectionSounds[rnd];
+        int rnd = Random.Range(0, _clips.Length);
+        availableAudioSource.clip = _clips[rnd];
         availableAudioSource.pitch = Random.Range(minPitch, maxPitch);
         availableAudioSource.Play();
     }

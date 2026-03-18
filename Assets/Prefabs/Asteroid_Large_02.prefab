@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6086395553692457477}
   - component: {fileID: 5167971802114775398}
   - component: {fileID: 3783536787696501898}
+  - component: {fileID: -7010546693670377421}
   m_Layer: 0
   m_Name: Asteroid_Large_02
   m_TagString: Untagged
@@ -29,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 2239244169702659954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.4561028, y: 0.2519823, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.4561028, y: 0.25198, z: 0}
+  m_LocalScale: {x: 4.75618, y: 4.75618, z: 4.75618}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,7 +107,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -201,7 +202,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3444ac28adc6e47aa7c5f6746c1735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  spawnValue: 3
   collisionDamage: 1
   healthMax: 3
   healthCurrent: 0
   explodeParticle: {fileID: 2057839621716469168, guid: 3cd24d18c713ab84aaa1191dfd898749, type: 3}
+  chunks:
+  - {fileID: 1866523721687625418, guid: 18acc8d8f28a6a246a533bbcec21a57e, type: 3}
+  - {fileID: 3049540313125897758, guid: 779b310b10409804bb5e64ce9d1ebc09, type: 3}
+  - {fileID: 8343742870757985993, guid: dcdfc8580de56944c8bfd19b993956dc, type: 3}
+  - {fileID: 3887850372725332582, guid: 8dd1a8d0c73b855468c35babddb489f7, type: 3}
+  - {fileID: 4383731236959210619, guid: e0af8b9066e9858459e5793d7b933b81, type: 3}
+  chunksMin: 3
+  chunksMax: 5
+  explodeDist: 0.1
+  explosionForce: 200
+  spawnChunks: 1
+--- !u!114 &-7010546693670377421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239244169702659954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54467ac4a6f358f41a5aa4d1bc581a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenWrap

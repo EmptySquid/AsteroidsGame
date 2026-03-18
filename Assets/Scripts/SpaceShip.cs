@@ -12,16 +12,21 @@ public class SpaceShip : MonoBehaviour
 
     public GameObject bulletRef;
     public float bulletSpeed;
+    public float bulletLifetime = 3f;
     public float firingRate = 0.33f;
     public float fireTimer = 0f;
+    
+    public SoundManager _SM;
 
     private Rigidbody2D rb2D;
+
+    public GameObject firingPoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb2D = GetComponent <Rigidbody2D>();
-
+        _SM = FindAnyObjectByType<SoundManager>();
         healthCurrent = healthMax;
     }
 
@@ -61,12 +66,14 @@ public class SpaceShip : MonoBehaviour
 
     public void FireBullet()
     {
-        GameObject bullet = Instantiate(bulletRef, transform.position, transform.rotation);
+        GameObject bullet = Instantiate(bulletRef, firingPoint.transform.position, transform.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-
+        _SM.PlayRandomSound(_SM.bulletSounds);
         Vector2 force = transform.up * bulletSpeed;
-
+        
         rb.AddForce(force);
+        Destroy(bullet, bulletLifetime);
+        
     }
 
     public void TakeDamage(float damage)
@@ -75,12 +82,15 @@ public class SpaceShip : MonoBehaviour
         if(healthCurrent <= 0)
         {
             Explode();
+
         }
+        _SM.PlayRandomSound(_SM.impactSounds);
     }
 
-        public void Explode()
+    public void Explode()
     {
         Debug.Log("Game Over!");
+        _SM.PlayRandomSound(_SM.deathSounds);
         Destroy(gameObject);
     }
 

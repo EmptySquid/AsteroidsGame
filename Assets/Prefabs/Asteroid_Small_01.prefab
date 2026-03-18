@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5747476714403085531}
   - component: {fileID: 2005184162263895855}
   - component: {fileID: 2385894895596260666}
+  - component: {fileID: 5930332502031257054}
   m_Layer: 0
   m_Name: Asteroid_Small_01
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.864355, y: 0.74257016, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 8.116217, y: 8.116217, z: 8.116217}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,7 +107,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -189,7 +190,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3444ac28adc6e47aa7c5f6746c1735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  spawnValue: 1
   collisionDamage: 1
   healthMax: 1
   healthCurrent: 0
   explodeParticle: {fileID: 2057839621716469168, guid: 72fd1418896c57646968060412f1be0c, type: 3}
+  chunks: []
+  chunksMin: 0
+  chunksMax: 4
+  explodeDist: 0.1
+  explosionForce: 200
+  spawnChunks: 0
+--- !u!114 &5930332502031257054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887850372725332582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54467ac4a6f358f41a5aa4d1bc581a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenWrap

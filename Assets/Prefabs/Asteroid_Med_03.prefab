@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5434886947103729776}
   - component: {fileID: 7393260962141698803}
   - component: {fileID: 4590190803620320969}
+  - component: {fileID: 7741947666235699771}
   m_Layer: 0
   m_Name: Asteroid_Med_03
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.1549654, y: 0.28048113, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5.4813, y: 5.4813, z: 5.4813}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,7 +107,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -195,7 +196,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3444ac28adc6e47aa7c5f6746c1735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  spawnValue: 2
   collisionDamage: 1
   healthMax: 2
   healthCurrent: 0
   explodeParticle: {fileID: 2057839621716469168, guid: c425ab39a36bbec4bb8c97312cc63f1d, type: 3}
+  chunks:
+  - {fileID: 3887850372725332582, guid: 8dd1a8d0c73b855468c35babddb489f7, type: 3}
+  - {fileID: 4383731236959210619, guid: e0af8b9066e9858459e5793d7b933b81, type: 3}
+  - {fileID: 8046109132603824142, guid: e806524e1fd3b1e418533a75a69b4c77, type: 3}
+  chunksMin: 2
+  chunksMax: 3
+  explodeDist: 0.1
+  explosionForce: 200
+  spawnChunks: 1
+--- !u!114 &7741947666235699771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8343742870757985993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54467ac4a6f358f41a5aa4d1bc581a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenWrap
