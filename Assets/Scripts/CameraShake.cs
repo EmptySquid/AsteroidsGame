@@ -1,36 +1,70 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
 
-    private IEnumerator FlashRoutine()
-    {
-        float timer = 0f;
-        float t = 0f;
+    //public Transform camTransform;
+    //public float Duration = 0.5f;
+    //public float Magnitude = 0.5f;
+    //public float shakeAmount = 0.7f;
+    //public float decreaseFactor = 1.0f;
 
-        while (t < 1f) // repeats while condition is true
+    //Vector3 originalPos;
+
+    //void Start()
+    //{
+    //    if (camTransform == null)
+    //    {
+    //        camTransform = Camera.main.transform;
+    //    }
+    //    originalPos = camTransform.localPosition;
+    //}
+
+
+
+    //private IEnumerator ShakeRoutine()
+    //{
+    //    float timer = 0f;
+    //    float t = 0f;
+    //
+    //    while (t < 1f) // repeats while condition is true
+    //    {
+    //        timer += Time.deltaTime;
+    //        t = Mathf.Clamp01(timer / shakeDuration);
+    //
+    //        yield return new WaitForEndOfFrame();
+    //    }
+    //
+    //    yield return null;
+    //
+    //}
+
+    private IEnumerator ShakeRoutine()
+    {
+        Vector3 originalPos = transform.localPosition;
+        float elapsed = 0.3f;
+        float duration = 0.5f;
+        float magnitude = 0.5f;
+
+        while (elapsed < duration)
         {
-            timer += Time.deltaTime;
-            t = Mathf.Clamp01(timer / flashDuration);
-            
-            yield return new WaitForEndOfFrame();
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
+
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-
-        yield return null;
+        transform.localPosition = originalPos;
     }
 
 
-
-
-    void Start()
+    public void Shake()
     {
-        
-    }
-
-    public void Flash()
-    {
-        StartCoroutine(());
+        StartCoroutine(ShakeRoutine());
     }
 
 }
