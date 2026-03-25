@@ -18,6 +18,8 @@ public class SpaceShip : MonoBehaviour
     
     public SoundManager _SM;
 
+    public ScreenFlash flash;
+
     private Rigidbody2D rb2D;
 
     public GameObject firingPoint;
@@ -79,8 +81,10 @@ public class SpaceShip : MonoBehaviour
     public void TakeDamage(float damage)
     {
         healthCurrent = healthCurrent - damage;
+        flash.Flash();
         if(healthCurrent <= 0)
         {
+            flash.Flash();
             Explode();
 
         }
@@ -94,6 +98,12 @@ public class SpaceShip : MonoBehaviour
         Destroy(gameObject);
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.GetComponent<Asteroid>() != null)
+        {
+            TakeDamage(collision.gameObject.GetComponent<Asteroid>().collisionDamage);
+        }
+    }
 
 }

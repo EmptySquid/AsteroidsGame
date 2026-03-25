@@ -20,6 +20,8 @@ public class SpaceshipMouseController : MonoBehaviour
 
     public float rotationSpeed;
 
+    public ScreenFlash flash;
+
     private Rigidbody2D rb;
     private Camera cam;
 
@@ -61,6 +63,8 @@ public class SpaceshipMouseController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         healthCurrent = healthCurrent - damage;
+        flash.Flash();
+        Debug.Log("Hit!");
         if (healthCurrent <= 0)
         {
             Explode();
@@ -69,10 +73,17 @@ public class SpaceshipMouseController : MonoBehaviour
 
     public void Explode()
     {
-        Debug.Log("Game Over!");
+        Debug.Log("Dead!");
         Destroy(gameObject);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
 
+        if (collision.gameObject.GetComponent<Asteroid>() != null)
+        {
+            TakeDamage(collision.gameObject.GetComponent<Asteroid>().collisionDamage);
+        }
+    }
     void Update()
     {
         UpdateFiring();
@@ -100,6 +111,7 @@ public class SpaceshipMouseController : MonoBehaviour
                 }
             }
         }
+
     }
     private void FixedUpdate()
     {

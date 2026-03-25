@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7663828657697405218}
   - component: {fileID: 5146189997536511377}
   - component: {fileID: 8986765415952354306}
+  - component: {fileID: 7939145620950520791}
   - component: {fileID: -901200845162601033}
-  - component: {fileID: 6185462309554601989}
   m_Layer: 0
-  m_Name: Spaceship
+  m_Name: SpaceshipMouseController
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,6 +178,30 @@ PolygonCollider2D:
       - {x: 0.0021431334, y: 0.29688326}
       - {x: -0.014286265, y: 0.29688323}
   m_UseDelaunayMesh: 1
+--- !u!114 &7939145620950520791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503241202173873210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a771f24bb947ee04190743270627c93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceshipMouseController
+  healthMax: 3
+  healthCurrent: 0
+  bulletRef: {fileID: 8455020797477448127, guid: 51ad6b528ab8bd54cab17709ae60b3c8, type: 3}
+  bulletSpeed: 300
+  bulletLifetime: 3
+  firingRate: 0.33
+  fireTimer: 0
+  moveSpeed: 10
+  instantRotation: 1
+  rotationSpeed: 0
+  flash: {fileID: 0}
+  firingPoint: {fileID: 0}
 --- !u!114 &-901200845162601033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,30 +214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54467ac4a6f358f41a5aa4d1bc581a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenWrap
---- !u!114 &6185462309554601989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503241202173873210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cf6ab83e3edac74d9971fbccd4da3d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceShip
-  healthMax: 3
-  healthCurrent: 0
-  enginePower: 2500
-  turnPower: 300
-  bulletRef: {fileID: 8455020797477448127, guid: 51ad6b528ab8bd54cab17709ae60b3c8, type: 3}
-  bulletSpeed: 300
-  bulletLifetime: 4
-  firingRate: 0.33
-  fireTimer: 0
-  _SM: {fileID: 0}
-  flash: {fileID: 0}
-  firingPoint: {fileID: 748758451536355332}
 --- !u!1 &748758451536355332
 GameObject:
   m_ObjectHideFlags: 0

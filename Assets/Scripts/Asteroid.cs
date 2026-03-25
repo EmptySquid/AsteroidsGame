@@ -30,12 +30,7 @@ public class Asteroid : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        SpaceShip ship = collision.gameObject.GetComponent<SpaceShip>();
-        if(ship != null)
-        {
-            ship.TakeDamage(collisionDamage);
-        }
-        if(collision.gameObject.tag == "Bullet1")
+        if (collision.gameObject.tag == "Bullet1")
         {
             Destroy(collision.gameObject);
             TakeDamage(1f);
