@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
   spawnValue: 3
+  scoreValue: 20
   collisionDamage: 1
   healthMax: 3
   healthCurrent: 0
@@ -218,6 +219,7 @@ MonoBehaviour:
   explodeDist: 0.1
   explosionForce: 200
   spawnChunks: 1
+  _SM: {fileID: 0}
 --- !u!114 &-7010546693670377421
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,70 +1,77 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraShake : MonoBehaviour
 {
 
-    //public Transform camTransform;
-    //public float Duration = 0.5f;
-    //public float Magnitude = 0.5f;
-    //public float shakeAmount = 0.7f;
-    //public float decreaseFactor = 1.0f;
-
-    //Vector3 originalPos;
-
-    //void Start()
-    //{
-    //    if (camTransform == null)
-    //    {
-    //        camTransform = Camera.main.transform;
-    //    }
-    //    originalPos = camTransform.localPosition;
-    //}
-
-
-
+    //public int Iterations;
+    //public float ShakeAmount;
+    //public float ShakeDelay;
+    //
+    //
     //private IEnumerator ShakeRoutine()
     //{
-    //    float timer = 0f;
-    //    float t = 0f;
-    //
-    //    while (t < 1f) // repeats while condition is true
+    //    Debug.Log("Camera Shake");
+    //    Vector3 originalPos = transform.position;
+    //    for (int n = 0; n < Iterations; n++)
     //    {
-    //        timer += Time.deltaTime;
-    //        t = Mathf.Clamp01(timer / shakeDuration);
-    //
-    //        yield return new WaitForEndOfFrame();
+    //        Vector3 pos = Random.insideUnitCircle * ShakeAmount;
+    //        transform.position = transform.position + pos;
+    //        yield return new WaitForSeconds(ShakeDelay);
     //    }
-    //
+    //    transform.position = originalPos;
     //    yield return null;
-    //
     //}
 
-    private IEnumerator ShakeRoutine()
+    
+
+
+    Vector3 originalPos;
+    Vector3 originalScale;
+
+
+    private void Awake()
     {
-        Vector3 originalPos = transform.localPosition;
-        float elapsed = 0.3f;
-        float duration = 0.5f;
-        float magnitude = 0.5f;
-
-        while (elapsed < duration)
-        {
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
-
-            transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
-
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.localPosition = originalPos;
+        originalPos = transform.position;
+        originalScale = transform.lossyScale;
     }
 
-
-    public void Shake()
+    IEnumerator CameraShakeRoutine(float duration, float intensity)
     {
-        StartCoroutine(ShakeRoutine());
+        //Setup
+        float timer = 0;
+        Vector2 shakeDir;
+        float changeX = 0;
+        float changeY = 0;
+        float stepDist = .5f;
+
+        while (timer < duration)
+        {
+            //Pick random direction
+            shakeDir.x = Random.Range(-intensity, intensity);
+            shakeDir.y = Random.Range(-intensity, intensity);
+
+            //Update Position
+            changeX = Mathf.Lerp(transform.position.x, transform.position.x + shakeDir.x, stepDist);
+            changeY = Mathf.Lerp(transform.position.y, transform.position.y + shakeDir.y, stepDist);
+
+            //Debug.Log("X: " + transform.position.x + " Y: " + transform.position.y + " Z: " + transform.position.z);
+            transform.position = new Vector3(changeX, changeY, transform.position.z);
+
+            //Update Timer
+            timer += Time.deltaTime;
+
+            //Wait until end of the frame
+            yield return new WaitForEndOfFrame();
+        }
+        //reset position
+        transform.position = originalPos;
+    }
+
+    public void Shake(float duration, float intensity)
+    {
+        StartCoroutine(CameraShakeRoutine(duration, intensity));
     }
 
 }

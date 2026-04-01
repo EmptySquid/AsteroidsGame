@@ -4,6 +4,7 @@ using static UnityEngine.ParticleSystem;
 public class Asteroid : MonoBehaviour
 {
     public int spawnValue;
+    public int scoreValue;
 
     public float collisionDamage = 1f;
     public float healthMax = 3f;
@@ -43,9 +44,15 @@ public class Asteroid : MonoBehaviour
         healthCurrent = healthCurrent - damage;
         if (healthCurrent <= 0)
         {
+            
             Explode();
         }
+        else
+        {
+            _SM.PlayRandomSound(_SM.impactSounds);
+        }
     }
+
 
 
     public void Explode()
@@ -59,6 +66,13 @@ public class Asteroid : MonoBehaviour
                 CreateAsteroidChunk();
             }
         }
+
+        SpaceShip ship = FindFirstObjectByType<SpaceShip>();
+        if(ship != null)
+        {
+            ship.score += scoreValue;
+        }
+
         Instantiate(explodeParticle, transform.position, transform.rotation);
         _SM.PlayRandomSound(_SM.explosionSounds);
         Destroy(gameObject);
@@ -83,4 +97,5 @@ public class Asteroid : MonoBehaviour
 
     }
 
+   
 }

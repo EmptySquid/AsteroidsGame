@@ -1,9 +1,9 @@
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class SpaceShip : MonoBehaviour
 {
+    public int score;
+
     public float healthMax = 3f;
     public float healthCurrent;
 
@@ -23,6 +23,13 @@ public class SpaceShip : MonoBehaviour
     private Rigidbody2D rb2D;
 
     public GameObject firingPoint;
+
+    public CameraShake shake;
+
+    public ScoreUI scoreUI;
+
+    public float duration;
+    public float intensity;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -82,7 +89,8 @@ public class SpaceShip : MonoBehaviour
     {
         healthCurrent = healthCurrent - damage;
         flash.Flash();
-        if(healthCurrent <= 0)
+        shake.Shake(duration, intensity);
+        if (healthCurrent <= 0)
         {
             flash.Flash();
             Explode();
@@ -94,8 +102,20 @@ public class SpaceShip : MonoBehaviour
     public void Explode()
     {
         Debug.Log("Game Over!");
+        GameOver();
         _SM.PlayRandomSound(_SM.deathSounds);
         Destroy(gameObject);
+    }
+
+    public void GameOver()
+    {
+        bool celebrateHiscore = false;
+        if(score > GetHighScore())
+        {
+            SetHighScore(score);
+            celebrateHiscore = true;
+        }
+        scoreUI.Show(celebrateHiscore);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -104,6 +124,15 @@ public class SpaceShip : MonoBehaviour
         {
             TakeDamage(collision.gameObject.GetComponent<Asteroid>().collisionDamage);
         }
+    }
+
+    public int GetHighScore()
+    {
+        return PlayerPrefs.GetInt("Hiscore", 0);
+    }
+    public void SetHighScore(int score)
+    {
+        PlayerPrefs.SetInt("Hiscore", score);
     }
 
 }

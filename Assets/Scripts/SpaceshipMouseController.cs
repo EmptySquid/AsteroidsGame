@@ -1,4 +1,3 @@
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class SpaceshipMouseController : MonoBehaviour
@@ -21,8 +20,7 @@ public class SpaceshipMouseController : MonoBehaviour
 
     public float rotationSpeed;
 
-    public ScreenFlash flash;
-    public CameraShake shake;
+    
 
     private Rigidbody2D rb;
     private Camera cam;
@@ -65,8 +63,8 @@ public class SpaceshipMouseController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         healthCurrent = healthCurrent - damage;
-        flash.Flash();
-        shake.Shake();
+        
+       
         Debug.Log("Hit!");
         if (healthCurrent <= 0)
         {

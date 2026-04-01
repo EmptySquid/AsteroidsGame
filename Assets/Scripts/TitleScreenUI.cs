@@ -17,6 +17,6 @@ public class TitleScreenUI : MonoBehaviour
 
     public void ClickQuit()
     {
-
+        Application.Quit();
     }
 }
