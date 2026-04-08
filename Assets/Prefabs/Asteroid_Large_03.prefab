@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 8586892431754528632}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7496614, y: 0.27309346, z: 0}
-  m_LocalScale: {x: 3.6075, y: 3.6075, z: 3.6075}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,7 +107,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -206,11 +206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3444ac28adc6e47aa7c5f6746c1735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
-  spawnValue: 3
-  scoreValue: 20
+  spawnValue: 1
+  scoreValue: 10
   collisionDamage: 1
-  healthMax: 3
-  healthCurrent: 0
+  healthMax: 1
+  healthCurrent: 1
   explodeParticle: {fileID: 2057839621716469168, guid: 3cd24d18c713ab84aaa1191dfd898749, type: 3}
   chunks:
   - {fileID: 1866523721687625418, guid: 18acc8d8f28a6a246a533bbcec21a57e, type: 3}
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8586892431754528632}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54467ac4a6f358f41a5aa4d1bc581a48, type: 3}
   m_Name: 

@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] asteroidsRef;
     public float checkInterval = 3f;
+    public int spawnAmount;
     public float pushForce = 100f;
     public int spawnThreshold = 10;
     public float inaccuracy = 2f;
@@ -37,7 +39,14 @@ public class SpawnManager : MonoBehaviour
 
             if(TotalAsteroidValue() < spawnThreshold)
             {
-                SpawnNewAsteroid();
+                for (int i = 0; i < spawnAmount; i++)
+                {
+                    SpawnNewAsteroid();
+                }
+            }
+            else
+            {
+                Debug.Log("Too many asteroids!");
             }
         }
     }
@@ -53,6 +62,11 @@ public class SpawnManager : MonoBehaviour
 
         Vector2 force = PushDirection(spawnPoint) * pushForce;
         Rigidbody2D rb = asteroid.GetComponent<Rigidbody2D>();
+        StartCoroutine(WaitForApplyForce(rb, force));
+    }
+    IEnumerator WaitForApplyForce(Rigidbody2D rb, Vector2 force)
+    {
+        yield return new WaitForSeconds(1);
         rb.AddForce(force);
     }
 

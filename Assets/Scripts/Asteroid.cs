@@ -26,6 +26,7 @@ public class Asteroid : MonoBehaviour
     {
         healthCurrent = healthMax;
         _SM = FindAnyObjectByType<SoundManager>();
+        Destroy(gameObject, 6);
     }
 
 

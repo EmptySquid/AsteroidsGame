@@ -5,6 +5,7 @@ public class ScreenWrap : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool hasBeenVisible = false;
 
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -12,7 +13,7 @@ public class ScreenWrap : MonoBehaviour
 
     void Update()
     {
-        if(hasBeenVisible == false && spriteRenderer.isVisible)
+        if (hasBeenVisible == false && spriteRenderer.isVisible)
         {
             hasBeenVisible = true;
         }
@@ -25,7 +26,7 @@ public class ScreenWrap : MonoBehaviour
 
         Vector2 newScreenPos = screenPos;
 
-        if(screenPos.x < 0)
+        if (screenPos.x < 0)
         {
             newScreenPos.x = Screen.width;
         }
@@ -34,15 +35,16 @@ public class ScreenWrap : MonoBehaviour
             newScreenPos.x = 0;
         }
 
-        if(screenPos.y < 0)
+        if (screenPos.y < 0)
         {
             newScreenPos.y = Screen.height;
         }
-        else if(screenPos.y > Screen.height)
+        else if (screenPos.y > Screen.height)
         {
             newScreenPos.y = 0;
         }
-        if(newScreenPos != screenPos)
+
+        if (newScreenPos != screenPos)
         {
             Vector2 newWorldPos = Camera.main.ScreenToWorldPoint(newScreenPos);
             transform.position = newWorldPos;

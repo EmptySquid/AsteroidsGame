@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3444ac28adc6e47aa7c5f6746c1735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
-  spawnValue: 3
+  spawnValue: 1
   scoreValue: 20
   collisionDamage: 1
   healthMax: 3
@@ -232,3 +232,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54467ac4a6f358f41a5aa4d1bc581a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenWrap
+  isPlayer: 0
