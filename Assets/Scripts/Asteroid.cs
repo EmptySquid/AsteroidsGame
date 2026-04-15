@@ -20,10 +20,16 @@ public class Asteroid : MonoBehaviour
     public bool spawnChunks;
 
     public SoundManager _SM;
+    public GameObject indicator;
+    public Canvas canvas;
 
 
     private void Start()
     {
+        canvas = GameObject.FindWithTag("MainCanvas").GetComponent<Canvas>();
+        GameObject i = Instantiate(indicator, transform.position, transform.rotation);
+        i.transform.SetParent(canvas.transform);
+        i.GetComponent<OffScreenIndicator>().target = gameObject.transform;
         healthCurrent = healthMax;
         _SM = FindAnyObjectByType<SoundManager>();
         Destroy(gameObject, 6);

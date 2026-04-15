@@ -220,6 +220,7 @@ MonoBehaviour:
   explosionForce: 200
   spawnChunks: 1
   _SM: {fileID: 0}
+  indicator: {fileID: 7175358156650330900, guid: d87ff04a346209345abfa219ebbbce9e, type: 3}
 --- !u!114 &-7010546693670377421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,4 +233,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54467ac4a6f358f41a5aa4d1bc581a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenWrap
-  isPlayer: 0

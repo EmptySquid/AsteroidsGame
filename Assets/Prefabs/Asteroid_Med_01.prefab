@@ -208,6 +208,7 @@ MonoBehaviour:
   explosionForce: 200
   spawnChunks: 1
   _SM: {fileID: 0}
+  indicator: {fileID: 7175358156650330900, guid: d87ff04a346209345abfa219ebbbce9e, type: 3}
 --- !u!114 &-1773203341835807425
 MonoBehaviour:
   m_ObjectHideFlags: 0

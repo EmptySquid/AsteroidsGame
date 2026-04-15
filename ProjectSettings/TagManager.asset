@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Collect
   - Bullet1
+  - MainCanvas
   layers:
   - Default
   - TransparentFX
