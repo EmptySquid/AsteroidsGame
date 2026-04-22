@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.Collections;
 
@@ -8,38 +7,39 @@ public class SpaceshipMouseController : MonoBehaviour
     public float healthMax = 3f;
     public float healthCurrent;
 
-    public GameObject bulletRef;
-    public float bulletSpeed;
-    public float bulletLifetime = 3f;
-    public float firingRate = 0.33f;
-    public float fireTimer = 0f;
-
     [Header("Movement")]
     public float moveSpeed = 10f;
     public bool instantRotation = true;
-    public float rotationSpeed;
+    public float rotationSpeed = 720f;
 
     [Header("Dodge Settings")]
     public float dodgeSpeed = 20f;
     public float dodgeDuration = 0.2f;
+    public float dodgeWindowDuration = 0.2f;
     public float dodgeCooldown = 0.8f;
+    public float dodgeSloMoSpeed = 0.5f;
+
+    [Header("Attack Settings")]
+    public float attackSpeed = 24f;
+    public float attackDuration = 0.2f;
+    public float attackCooldown = 0.8f;
 
     [Header("Mouse Reticle")]
     public Transform mouseReticle;
     public float reticleMaxDistance = 6f;
 
-    private Rigidbody2D rb;
-    private Camera cam;
+    // Internal
+    Rigidbody2D rb;
+    Camera cam;
+    Vector2 inputMove;
+    float targetAngleDeg;
 
-    private Vector2 inputMove;
-    private float targetAngleDeg;
+    bool isDodging;
+    bool isAttacking;
+    bool canDodge = true;
+    bool canAttack;
 
-    public GameObject firingPoint;
-
-    private bool isDodging;
-    private bool canDodge = true;
-
-    private void Awake()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
@@ -51,28 +51,37 @@ public class SpaceshipMouseController : MonoBehaviour
 
     void Update()
     {
-        UpdateFiring();
-
-        // Dodge input
-        if (Input.GetKeyDown(KeyCode.Space) && canDodge)
+        // =========================
+        // INPUT
+        // =========================
+        UpdateMouseReticle();
+        RotateShipTowardReticle();
+        if (Input.GetMouseButtonDown(1) && canDodge && !isAttacking)
+        {
             StartCoroutine(Dodge());
+        }
 
-        if (isDodging)
+        if (isDodging && canAttack && Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(Attack());
+        }
+
+        if (isDodging || isAttacking)
             return;
 
         inputMove = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical")
         );
+
         inputMove = Vector2.ClampMagnitude(inputMove, 1f);
 
-        UpdateMouseReticle();
-        RotateShipTowardReticle();
+
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if (isDodging)
+        if (isDodging || isAttacking)
             return;
 
         rb.linearVelocity = inputMove * moveSpeed;
@@ -87,17 +96,113 @@ public class SpaceshipMouseController : MonoBehaviour
             rb.MoveRotation(newAngle);
         }
     }
+    public void TakeDamage(float damage)
+    {
+
+        healthCurrent -= damage;
+        Debug.Log("Hit!");
+
+        if (healthCurrent <= 0)
+            Explode();
+    }
+    public void Explode()
+    {
+        Debug.Log("Dead!");
+        Destroy(gameObject);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Asteroid asteroid = collision.gameObject.GetComponent<Asteroid>();
+        if (asteroid != null)
+            TakeDamage(asteroid.collisionDamage);
+    }
 
     // =========================
-    // MOUSE RETICLE
+    // DODGE (WASD-BASED)
     // =========================
-    private void UpdateMouseReticle()
+
+    IEnumerator Dodge()
     {
-        if (cam == null || mouseReticle == null)
+        canDodge = false;
+        isDodging = true;
+        canAttack = true;
+
+        // Enter slow motion
+        SetTimeScale(dodgeSloMoSpeed);
+
+        // Determine dodge direction
+        Vector2 dodgeDir = inputMove;
+        if (dodgeDir == Vector2.zero)
+            dodgeDir = transform.up; // fallback
+
+        rb.linearVelocity = dodgeDir.normalized * dodgeSpeed;
+
+        yield return new WaitForSeconds(dodgeDuration);
+
+        rb.linearVelocity = Vector2.zero;
+
+        // Allow a short window to chain attack
+        StartCoroutine(DodgeWindowTimeout());
+    }
+
+    IEnumerator DodgeWindowTimeout()
+    {
+        yield return new WaitForSecondsRealtime(dodgeWindowDuration);
+
+        if (isDodging && !isAttacking)
+        {
+            ExitDodgeMode();
+        }
+    }
+
+    void ExitDodgeMode()
+    {
+        isDodging = false;
+        canAttack = false;
+
+        SetTimeScale(1f);
+
+        StartCoroutine(DodgeCooldown());
+    }
+
+    IEnumerator DodgeCooldown()
+    {
+        yield return new WaitForSeconds(dodgeCooldown);
+        canDodge = true;
+    }
+
+    // =========================
+    // ATTACK (MOUSE DASH)
+    // =========================
+
+    IEnumerator Attack()
+    {
+        isAttacking = true;
+        canAttack = false;
+
+        ExitDodgeMode();
+
+        Vector2 dir = (mouseReticle.position - transform.position).normalized;
+        rb.linearVelocity = dir * attackSpeed;
+
+        yield return new WaitForSeconds(attackDuration);
+
+        rb.linearVelocity = Vector2.zero;
+        isAttacking = false;
+
+        yield return new WaitForSeconds(attackCooldown);
+    }
+
+    // =========================
+    // MOUSE / ROTATION
+    // =========================
+
+    void UpdateMouseReticle()
+    {
+        if (!cam || !mouseReticle)
             return;
 
-        Vector3 mouseScreen = Input.mousePosition;
-        Vector3 mouseWorld = cam.ScreenToWorldPoint(mouseScreen);
+        Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
         mouseWorld.z = 0f;
 
         Vector2 offset = mouseWorld - transform.position;
@@ -106,99 +211,33 @@ public class SpaceshipMouseController : MonoBehaviour
         mouseReticle.position = (Vector2)transform.position + offset;
     }
 
-    private void RotateShipTowardReticle()
+    void RotateShipTowardReticle()
     {
-        if (mouseReticle == null)
+        if (!mouseReticle)
             return;
 
         Vector2 dir = mouseReticle.position - transform.position;
-
-        if (dir.sqrMagnitude > 0.0001f)
-        {
-            if (instantRotation)
-            {
-                transform.up = dir.normalized;
-            }
-            else
-            {
-                targetAngleDeg =
-                    Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-            }
-        }
-    }
-
-    // =========================
-    // DODGE
-    // =========================
-    private IEnumerator Dodge()
-    {
-        canDodge = false;
-        isDodging = true;
-
-        rb.linearVelocity = transform.up * dodgeSpeed;
-
-        yield return new WaitForSeconds(dodgeDuration);
-
-        rb.linearVelocity = Vector2.zero;
-        isDodging = false;
-
-        yield return new WaitForSeconds(dodgeCooldown);
-        canDodge = true;
-    }
-
-    // =========================
-    // FIRING
-    // =========================
-    private void UpdateFiring()
-    {
-        bool isFiring = Input.GetButton("Fire1");
-        fireTimer -= Time.deltaTime;
-
-        if (isFiring && fireTimer <= 0f)
-        {
-            FireBullet();
-            fireTimer = firingRate;
-        }
-    }
-
-    public void FireBullet()
-    {
-        GameObject bullet = Instantiate(
-            bulletRef,
-            firingPoint.transform.position,
-            transform.rotation
-        );
-
-        Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
-        rbBullet.AddForce(transform.up * bulletSpeed);
-        Destroy(bullet, bulletLifetime);
-    }
-
-    // =========================
-    // DAMAGE
-    // =========================
-    public void TakeDamage(float damage)
-    {
-        if (isDodging)
+        if (dir.sqrMagnitude < 0.0001f)
             return;
 
-        healthCurrent -= damage;
-        Debug.Log("Hit!");
-
-        if (healthCurrent <= 0)
-            Explode();
+        if (instantRotation)
+        {
+            transform.up = dir.normalized;
+        }
+        else
+        {
+            targetAngleDeg =
+                Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        }
     }
 
-    public void Explode()
-    {
-        Debug.Log("Dead!");
-        Destroy(gameObject);
-    }
+    // =========================
+    // TIME SCALE HELPER
+    // =========================
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void SetTimeScale(float scale)
     {
-        Asteroid asteroid = collision.gameObject.GetComponent<Asteroid>();
-        if (asteroid != null)
-            TakeDamage(asteroid.collisionDamage);
+        Time.timeScale = scale;
+        Time.fixedDeltaTime = 0.02f * scale;
     }
 }
