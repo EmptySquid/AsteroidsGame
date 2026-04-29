@@ -120,7 +120,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!60 &9003960030050033398
 PolygonCollider2D:
@@ -152,7 +152,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -222,9 +222,10 @@ MonoBehaviour:
   chunksMax: 5
   explodeDist: 0.1
   explosionForce: 200
-  spawnChunks: 1
+  spawnChunks: 0
   _SM: {fileID: 0}
   indicator: {fileID: 7175358156650330900, guid: d87ff04a346209345abfa219ebbbce9e, type: 3}
+  canvas: {fileID: 0}
 --- !u!114 &5862500180439575593
 MonoBehaviour:
   m_ObjectHideFlags: 0

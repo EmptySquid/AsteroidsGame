@@ -36,16 +36,23 @@ public class Asteroid : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Bullet1")
+    //    {
+    //        Destroy(collision.gameObject);
+    //        TakeDamage(1f);
+    //    }
+        
+    //}
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Bullet1")
         {
             Destroy(collision.gameObject);
             TakeDamage(1f);
         }
-        
     }
-
     public void TakeDamage(float damage)
     {
         healthCurrent = healthCurrent - damage;
@@ -64,20 +71,11 @@ public class Asteroid : MonoBehaviour
 
     public void Explode()
     {
-        if(spawnChunks == true)
-        {
-            int numChunks = Random.Range(chunksMin, chunksMax + 1);
-
-            for (int i = 0; i < numChunks; i++)
-            {
-                CreateAsteroidChunk();
-            }
-        }
-
-        SpaceShip ship = FindFirstObjectByType<SpaceShip>();
+        Debug.Log("Destroying");
+        SpaceshipMouseController ship = FindFirstObjectByType<SpaceshipMouseController>();
         if(ship != null)
         {
-            ship.score += scoreValue;
+            ship.AddToScore(scoreValue);
         }
 
         Instantiate(explodeParticle, transform.position, transform.rotation);

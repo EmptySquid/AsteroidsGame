@@ -3,6 +3,7 @@ using UnityEngine;
 public class SpaceShip : MonoBehaviour
 {
     public int score;
+    public int multiplier;
 
     public float healthMax = 3f;
     public float healthCurrent;
@@ -98,6 +99,8 @@ public class SpaceShip : MonoBehaviour
         }
         _SM.PlayRandomSound(_SM.impactSounds);
     }
+
+
 
     public void Explode()
     {

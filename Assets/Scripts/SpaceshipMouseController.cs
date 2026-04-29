@@ -1,8 +1,25 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SocialPlatforms.Impl;
+using Unity.VisualScripting;
 
 public class SpaceshipMouseController : MonoBehaviour
 {
+
+    public int score;
+    public int multiplier = 1;
+    public GameManager _GM;
+    public GameObject destroyParticle;
+    public SoundManager _SM;
+    public SpawnManager _SPAWN;
+    public SpriteRenderer _spriteRenderer;
+
+    public Sprite standingSprite;
+    public Sprite chargeSprite;
+    public Sprite punchSprite;
+
+    public ScoreUI scoreUI;
+
     [Header("Base Player")]
     public float healthMax = 3f;
     public float healthCurrent;
@@ -34,19 +51,22 @@ public class SpaceshipMouseController : MonoBehaviour
     Vector2 inputMove;
     float targetAngleDeg;
 
-    bool isDodging;
-    bool isAttacking;
-    bool canDodge = true;
-    bool canAttack;
+    public bool isDodging;
+    public bool isAttacking;
+    public bool canDodge = true;
+    public bool canAttack;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
+        _SM = FindAnyObjectByType<SoundManager>();
         healthCurrent = healthMax;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -76,7 +96,17 @@ public class SpaceshipMouseController : MonoBehaviour
 
         inputMove = Vector2.ClampMagnitude(inputMove, 1f);
 
-
+        //   if (isDodging)
+        //   {
+        //       _spriteRenderer.sprite = chargeSprite;
+        //   } else if (isAttacking)
+        //   {
+        //       _spriteRenderer.sprite = punchSprite;
+        //   } else
+        //   {
+        //       _spriteRenderer.sprite = standingSprite;
+        //   }
+        _spriteRenderer.sprite = standingSprite;
     }
 
     void FixedUpdate()
@@ -107,14 +137,79 @@ public class SpaceshipMouseController : MonoBehaviour
     }
     public void Explode()
     {
-        Debug.Log("Dead!");
-        Destroy(gameObject);
+        Instantiate(destroyParticle, transform.position, transform.rotation);
+        _SM.PlayRandomSound(_SM.deathSounds);
+        GameOver();
+
+        _GM.KillPlayer(gameObject);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void GameOver()
+    {
+        bool celebrateHiscore = false;
+        if (score > GetHighScore())
+        {
+            SetHighScore(score);
+            celebrateHiscore = true;
+        }
+        scoreUI.Show(celebrateHiscore);
+    }
+    public int GetHighScore()
+    {
+        return PlayerPrefs.GetInt("Hiscore", 0);
+    }
+    public void SetHighScore(int score)
+    {
+        PlayerPrefs.SetInt("Hiscore", score);
+    }
+
+
+    public void AddToScore(int amount)
+    {
+        int prevMultiplier = multiplier;
+
+        int totalScore = amount * multiplier;
+        score += totalScore;
+
+        multiplier++;
+
+        int prevTens = prevMultiplier / 10;
+        int currTens = multiplier / 10;
+
+        _SPAWN.spawnAmount += currTens - prevTens;
+    }
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    Asteroid asteroid = collision.gameObject.GetComponent<Asteroid>();
+    //    if (asteroid != null)
+    //    {
+    //        if (isAttacking)
+    //        {
+    //            asteroid.TakeDamage(6);
+    //        }
+    //        else
+    //        {
+    //            TakeDamage(asteroid.collisionDamage);
+    //        }
+
+    //    }
+
+    //}
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         Asteroid asteroid = collision.gameObject.GetComponent<Asteroid>();
         if (asteroid != null)
-            TakeDamage(asteroid.collisionDamage);
+        {
+            if (isAttacking)
+            {
+                asteroid.TakeDamage(6);
+            }
+            else
+            {
+                TakeDamage(asteroid.collisionDamage);
+            }
+
+        }
     }
 
     // =========================
@@ -126,6 +221,8 @@ public class SpaceshipMouseController : MonoBehaviour
         canDodge = false;
         isDodging = true;
         canAttack = true;
+
+        _spriteRenderer.sprite = chargeSprite;
 
         // Enter slow motion
         SetTimeScale(dodgeSloMoSpeed);
@@ -179,6 +276,8 @@ public class SpaceshipMouseController : MonoBehaviour
     {
         isAttacking = true;
         canAttack = false;
+
+        _spriteRenderer.sprite = punchSprite;
 
         ExitDodgeMode();
 

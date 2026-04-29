@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class ScoreUI : MonoBehaviour
 {
-    public TMP_Text scoreTextBox, hiscoreTextBox, gameOverScoreText;
+    public TMP_Text scoreTextBox, comboTextBox, hiscoreTextBox, gameOverScoreText;
     public GameObject scorePanel, celebrate;
-    private SpaceShip ship;
+    private SpaceshipMouseController ship;
 
 
 
@@ -14,7 +14,7 @@ public class ScoreUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ship = FindFirstObjectByType<SpaceShip>();
+        ship = FindFirstObjectByType<SpaceshipMouseController>();
         Hide();
     }
 
@@ -24,6 +24,7 @@ public class ScoreUI : MonoBehaviour
         if(ship != null)
         {
             scoreTextBox.text = ship.score.ToString();
+            comboTextBox.text = "x" + ship.multiplier.ToString();
         }
     }
 

@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1514352692081007956}
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7851470227991654557, guid: e39d6ae7ed8516049871e739ba0d372c, type: 3}
+  m_Sprite: {fileID: 1028052860243743854, guid: c5e8adde0ee25a2428bfbde8c4493d3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,7 +120,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -161,8 +161,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.62, y: 0.61}
+    pivot: {x: 0.516129, y: -1.15}
+    oldSize: {x: 0.31, y: 0.2}
     newSize: {x: 0.62, y: 0.61}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -170,13 +170,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.25805277, y: -0.16961017}
-      - {x: -0.30837667, y: -0.30012995}
-      - {x: 0.29863656, y: -0.30012995}
-      - {x: 0.2759096, y: -0.21850657}
-      - {x: 0.16266292, y: -0.0009736344}
-      - {x: 0.0021431334, y: 0.29688326}
-      - {x: -0.014286265, y: 0.29688323}
+    - - {x: -0.1645004, y: 0.36198643}
+      - {x: -0.15425065, y: 0.26961917}
+      - {x: -0.08416023, y: 0.22742279}
+      - {x: -0.0026732497, y: 0.22162582}
+      - {x: 0.07944965, y: 0.22866815}
+      - {x: 0.15353243, y: 0.2674805}
+      - {x: 0.14326893, y: 0.41275495}
+      - {x: -0.09107697, y: 0.43458876}
   m_UseDelaunayMesh: 1
 --- !u!114 &7939145620950520791
 MonoBehaviour:
@@ -190,19 +191,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a771f24bb947ee04190743270627c93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceshipMouseController
-  healthMax: 3
-  healthCurrent: 3
-  bulletRef: {fileID: 8455020797477448127, guid: 51ad6b528ab8bd54cab17709ae60b3c8, type: 3}
-  bulletSpeed: 500
-  bulletLifetime: 3
-  firingRate: 0.33
-  fireTimer: 0
+  score: 0
+  multiplier: 1
+  _GM: {fileID: 0}
+  destroyParticle: {fileID: 2057839621716469168, guid: 3cd24d18c713ab84aaa1191dfd898749, type: 3}
+  _SM: {fileID: 0}
+  _SPAWN: {fileID: 0}
+  scoreUI: {fileID: 0}
+  healthMax: 1
+  healthCurrent: 1
   moveSpeed: 5
   instantRotation: 1
   rotationSpeed: 0
-  flash: {fileID: 0}
-  shake: {fileID: 0}
-  firingPoint: {fileID: 0}
+  dodgeSpeed: 50
+  dodgeDuration: 1
+  dodgeWindowDuration: 0.2
+  dodgeCooldown: 1
+  dodgeSloMoSpeed: 0.1
+  attackSpeed: 50
+  attackDuration: 0.2
+  attackCooldown: 0.8
+  mouseReticle: {fileID: 0}
+  reticleMaxDistance: 20
+  isDodging: 0
+  isAttacking: 0
+  canDodge: 1
+  canAttack: 0
 --- !u!114 &-901200845162601033
 MonoBehaviour:
   m_ObjectHideFlags: 0
